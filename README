@@ -1,0 +1,65 @@
+Witam w Sigil
+=============
+
+Wprowadzenie
+------------
+Sigil jest to aplikacja internetowa wspomagająca proces projektowania pieczątek.
+
+Frontend będzie napisany w Onjective-J Framework Cappuccino.
+Backend będzie napisany w PHP5 i Zend Framework.
+
+Więcej informacji na http://sigil.widmogorod.info
+
+
+Wymagania systemowe
+-------------------
+Do uruchomienia Sigil potrzebna będie przeglądarka internetowa, która rozumie JacaScritp
+
+
+TODO
+----
+Application
+  - stworzyć i podmienić logo programu (SigilIcon_256x256.png)
+  - zmienić favicone
+
+SIMenu
+  - zaimplementować metody delegate: cut, pastle itp..
+  - [SIMenu setMenuBarIconImage:] - ikona zalerzna od typudokumentu?
+  - [SIMenu setMenuBarTitle:@"Takkkk"]; - to będzie ustawiane podczas utworzenia dokumentu
+
+SIWindowController
+  - powinien dodać okno, które będzie singletonem? - to ma być przestrzeń edycji,
+    w której nie przewiduję przełanczania się między oknami, czy projektami ..
+
+Toolbar:
+  - wydzielić jako osobną klasę?
+  - zmodyfikować grafikę i grafikę alternatywną na przycisku: ToolbarItemAddText
+  - zmodyfikować grafikę i grafikę alternatywną na przycisku: ToolbarItemAddImage
+  - zmodyfikować grafikę i grafikę alternatywną na przycisku: ToolbarItemPreview (nie koniecznie)
+  - zmodyfikować grafikę i grafikę alternatywną na przycisku: ToolbarItemOrder
+  - zmodyfikować grafikę i dodać grafikę alternatywną dla przycisku: ToolbarItemLeft
+  - zmodyfikować grafikę i dodać grafikę alternatywną dla przycisku: ToolbarItemCenter
+  - zmodyfikować grafikę i dodać grafikę alternatywną dla przycisku: ToolbarItemRight
+  
+
+NOTATKI
+-------
+ CPViewMaxXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X minimalnym (czyli wymiar X maksymalny jest elastyczny)
+ CPViewMaxYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y minimalnym (czyli wymiar Y maksymalny jest elastyczny)
+ CPViewMinXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X maksymalnym (czyli wymiar X minimalny jest elastyczny)
+ CPViewMinYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y maksymalnym (czyli wymiar X minimalny jest elastyczny)
+
+
+Autor
+-----
+Pomysłodawcą i wykonawcą tej aplikacji jest Gabriel Habryn.
+Wszelkie uwagi pytania proszę kierować pod adres widmogrod@gmail.com
+
+
+Licencja
+--------
+Sigil jest opublikowany na licencji MIT, możesz modyfikować jego kod redystrybuować
+ale informacje o Autorze muszą być zachowane.
+
+POPRAWKI:
+- kod nie może być sprzedawany
