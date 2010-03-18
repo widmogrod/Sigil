@@ -1,6 +1,14 @@
 @import <Foundation/CPObject.j>
 
 @import "SIMenu.j"
+@import "SIDocument.j"
+
+// Globale dla aplikacji
+SISitebarLeftWidth = 200.0;
+SIToolbarHeight = 59.0;
+SIMenubarHeight = 29.0;
+SIToolbarAndMenubarHeight = SIToolbarHeight + SIMenubarHeight;
+
 
 var ToolbarItemUndo = "ToolbarItemUndo",
 	ToolbarItemRedo = "ToolbarItemRedo",

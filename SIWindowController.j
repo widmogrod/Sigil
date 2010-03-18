@@ -1,38 +1,92 @@
 @import <AppKit/CPWindowController.j>
 @import <AppKit/CPView.j>
 
+@import "Views/SIElementsView.j"
+
 @implementation SIWindowController: CPWindowController
 {}
 
 - (void) init
 {
-	var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMake(150.0, 57.0, 500.0, 200.0)
+	var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero()
 												styleMask:CPBorderlessWindowMask],
-		contentView = [theWindow contentView],
-		bounds = [contentView bounds];
+		contentView = [theWindow contentView];
+
+	// Pobierz wymiary okna przeglądarki
+	var platformBounds = [[theWindow platformWindow] nativeContentRect];
+
+	// Pozycjonowaniue CPWindow w odpowiednim miejscu
+	[theWindow setFrameOrigin:CGPointMake(SISitebarLeftWidth, SIToolbarAndMenubarHeight)];
+	[theWindow setFrameSize:CGSizeMake(CGRectGetWidth(platformBounds) - SISitebarLeftWidth, 
+									   CGRectGetHeight(platformBounds) - SIToolbarAndMenubarHeight)];
 
 
-	var contentArea = [[CPView alloc] initWithFrame:CGRectMake(5.0, 5.0, CGRectGetWidth(bounds)-15, CGRectGetHeight(bounds)-15)];
+	// Okno bedzie się rozszerzać w wysokości i szerokości
+	[theWindow setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];	
+
+	[contentView setBackgroundColor:[CPColor greenColor]];
+	var bounds = [contentView bounds];
+
+
+	
+//	var scrollView = [[CPScrollView alloc] initWithFrame:bounds];
+//	[scrollView setAutohidesScrollers:YES];
+
+/*
+	var contentArea = [[CPView alloc] initWithFrame:CGRectMake(CGRectGetMinX(bounds)+10,
+																CGRectGetMinY(bounds)+10,
+																CGRectGetWidth(bounds)-20,
+																CGRectGetHeight(bounds)-20)];
+*/
+												
+				
+	var contentArea = [[SIElementsView alloc] initWithFrame:CGRectMake(10, 10,
+																CGRectGetWidth(bounds)-20,
+																CGRectGetHeight(bounds)-20)];
+
+	//console.log([[CPDOMWindowBridge sharedDOMWindowBridge] contentBounds]);
+
     [contentArea setBackgroundColor:[CPColor redColor]];
-    
-    // This view will grow in both height an width.
+    // zachowuj sie elastycznie
     [contentArea setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
     
     // This view will grow in both height an width.
-	[theWindow setAutoresizingMask:CPViewMaxXMargin | CPViewMaxYMargin | CPViewMinXMargin | CPViewMinYMargin | CPViewWidthSizable];	
+    //[contentArea setAutoresizingMask:CPViewMaxXMargin | CPViewMaxYMargin | CPViewMinXMargin | CPViewMinYMargin | CPViewWidthSizable];
+    
+    
+    // zawsze zachowuj stały rozmiar 
+    //[contentArea setAutoresizingMask:CPViewMaxXMargin | CPViewMaxYMargin];
+    
+    
 	
 	[contentView addSubview:contentArea];
-	//[theWindow makeFirstResponder:contentView];
+	[theWindow makeFirstResponder:contentView];
 
-	console.log([theWindow isMainWindow]);
+	//console.log([theWindow isMainWindow]);
 
 	self = [super initWithWindow:theWindow];
 	
 	if (self)
 	{
+		console.log("SIWindowController", [[self elements] count]);
 	}
 	
 	return self;
+}
+
+/*
+	Zestaw elementów wchodzących w skład SIDocument
+*/
+- (CPSet)elements
+{
+	var elements = [[self document] elements];
+	console.log("SIWindowController::elements", [elements count]);
+	if (!elements)
+	{
+		elements = [CPSet set];
+	}
+
+	return elements;
 }
 
 @end

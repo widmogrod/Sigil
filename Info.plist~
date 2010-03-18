@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CPApplicationDelegateClass</key>
+	<string>AppController</string>
+
+	<key>CPPrincipalClass</key>
+	<string>CPApplication</string>
+
+	<!-- Dane wykorzystywane min. w panelu about -->	
+	<key>CPBundleName</key>
+	<string>Sigil</string>
+
+	<key>CPBundleVersion</key>
+	<string>0.1</string>
+
+	<key>CPBundleShortVersionString</key>
+	<string>alpha</string>
+
+	<key>CPApplicationIcon</key>
+	<string>Resources/SigilIcon_256x256.png</string>
+
+	<key>CPHumanReadableCopyright</key>
+	<string>Gabriel Habryn</string>
+	
+	<key>CPBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CPBundleTypeName</key>
+			<string>SigilBungle</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sig</string>
+			</array>
+			<key>CPDocumentClass</key>
+			<string>SIDocument</string>
+		</dict>
+	</array>
+
+</dict>
+</plist>

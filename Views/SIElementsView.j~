@@ -1,0 +1,114 @@
+@import <AppKit/CPView.j>
+@import <AppKit/CPColor.j>
+@import <AppKit/CPGraphicsContext.j>
+@import <Foundation/CPSet.j>
+
+
+@implementation SIElementsView : CPView
+{
+}
+
+- (id)init
+{
+	self = [super init];
+	
+	if (self)
+	{
+		
+	}
+	
+	return self;
+}
+
+/*
+	Zestaw elementów wchodzących w skład SIDocument
+*/
+- (CPSet)elements
+{
+	var elements = [[[self window] windowController] elements];
+	if (!elements)
+	{
+		elements = [CPSet set];
+	}
+	return elements;
+}
+
+- (void)drawRect:(CPRect)aRect
+{
+
+    var bounds = [self bounds],
+    	context = [[CPGraphicsContext currentContext] graphicsPort];                           
+
+	
+    //CGContextSetLineWidth(context, 1.0);
+	//CGContextSetFillColor(context, fillColor);
+	
+		// function CGContextSetShadow(aContext, aSize, aBlur)
+		// function CGContextSetShadowWithColor(aContext, aSize, aBlur, aColor)
+		//CGContextSetShadowWithColor(context, CGSizeMake(0,0), 12.0, [CPColor blueColor]);
+
+	CGContextBeginPath(context);
+	
+    	var rect = CGRectMake(CGRectGetMinX(bounds) + 1, CGRectGetMinY(bounds) + 5,
+			CGRectGetWidth(bounds) - 14, CGRectGetHeight(bounds) - 10);
+
+		//CGContextMoveToPoint(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect));
+		// @function CGContextAddArc(aContext, x, y, radius, startAngle, endAngle, clockwise)
+		//CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMinY(rect) + radius, radius, 3.0 * Math.PI / 2.0, 0, 1);
+		
+		//CGContextMoveToPoint(context, 30, 30);
+		
+		//function CGContextAddArcToPoint(aContext, x1, y1, x2, y2, radius)
+		//CGContextAddArcToPoint(context, 30.0, 30.0, 40.0, 40.0,  5.0);
+
+		//function CGContextAddCurveToPoint(aContext, cp1x, cp1y, cp2x, cp2y, x, y)
+		//CGContextAddCurveToPoint(context, 10, 10, 20, 20, 15, 0);
+
+
+		// function CGContextAddEllipseInRect(aContext, aRect)
+		// CGContextAddEllipseInRect(context, rect);
+		
+		// function CGContextAddEllipseInRect(aContext, aRect)
+		CGContextAddEllipseInRect(context, rect);
+
+		//CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect) - (CGRectGetHeight(rect) / 2.0) - 5);				
+		
+		//CGContextAddLineToPoint(context, CGRectGetMaxX(rect) + 9, CGRectGetMaxY(rect) - (CGRectGetHeight(rect) / 2.0));
+		//CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect) - (CGRectGetHeight(rect) / 2.0) + 5);
+		//CGContextAddArc(context, CGRectGetMaxX(rect) - radius, CGRectGetMaxY(rect) - radius, radius, 0.0, Math.PI / 2.0, 1);
+		//CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMaxY(rect) - radius, radius, Math.PI / 2.0, Math.PI, 1);					
+		//CGContextAddArc(context, CGRectGetMinX(rect) + radius, CGRectGetMinY(rect) + radius, radius, Math.PI, 3.0 * Math.PI / 2.0, 1);				
+	}			
+
+	CGContextClosePath(context);
+
+	// function CGContextSetAlpha(aContext, anAlpha)
+	// @param anAlpha the new alpha value. 1.0 is completely opaque, 0.0 is completely transparent.
+	//CGContextSetAlpha(context, fillOpacity);
+	
+	CGContextFillPath(context);	
+	CGContextRestoreGState(context);	
+	CGContextStrokePath(context);
+}
+
+
+
+
+- (void)mouseMoved:(CPEvent)anEvent	
+{
+	console.log("mouseMoved");
+	console.log("Type: ",[anEvent type]);
+	console.log("Event: ", [[[anEvent window] windowController] elements]);
+}
+
+- (void)mouseDown(CPEvent)anEvent
+{
+	var location = [self convertPoint:[anEvent locationInWindow] fromView:nil];
+	
+	console.log("mouseDown");
+	console.log(location);
+	console.log("Type: ",[anEvent type]);
+	console.log("Event: ", [[[anEvent window] windowController] elements]);
+}
+
+@end

@@ -23,5 +23,20 @@
 
 	<key>CPHumanReadableCopyright</key>
 	<string>Gabriel Habryn</string>
+	
+	<key>CPBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CPBundleTypeName</key>
+			<string>SigilBundle</string>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sig</string>
+			</array>
+			<key>CPDocumentClass</key>
+			<string>SIDocument</string>
+		</dict>
+	</array>
+
 </dict>
 </plist>
