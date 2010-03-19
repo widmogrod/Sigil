@@ -8,6 +8,7 @@
 
 - (void) init
 {
+	// Utwórz okno bez obramowań
 	var theWindow = [[CPWindow alloc] initWithContentRect:CGRectMakeZero()
 												styleMask:CPBorderlessWindowMask],
 		contentView = [theWindow contentView];
@@ -24,51 +25,31 @@
 	// Okno bedzie się rozszerzać w wysokości i szerokości
 	[theWindow setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];	
 
-	[contentView setBackgroundColor:[CPColor greenColor]];
+	// Pobierz aktualne bounds (ważne że po pozycjonowaniu okna głównego)
 	var bounds = [contentView bounds];
 
-
-	
-//	var scrollView = [[CPScrollView alloc] initWithFrame:bounds];
-//	[scrollView setAutohidesScrollers:YES];
-
-/*
-	var contentArea = [[CPView alloc] initWithFrame:CGRectMake(CGRectGetMinX(bounds)+10,
-																CGRectGetMinY(bounds)+10,
-																CGRectGetWidth(bounds)-20,
-																CGRectGetHeight(bounds)-20)];
-*/
-												
-				
+	// Dodaj widok, w którym będą renderowane elementy
 	var contentArea = [[SIElementsView alloc] initWithFrame:CGRectMake(10, 10,
 																CGRectGetWidth(bounds)-20,
 																CGRectGetHeight(bounds)-20)];
-
-	//console.log([[CPDOMWindowBridge sharedDOMWindowBridge] contentBounds]);
-
-    [contentArea setBackgroundColor:[CPColor redColor]];
-    // zachowuj sie elastycznie
+	// zachowuj sie elastycznie
     [contentArea setAutoresizingMask:CPViewWidthSizable | CPViewHeightSizable];
-    
-    // This view will grow in both height an width.
-    //[contentArea setAutoresizingMask:CPViewMaxXMargin | CPViewMaxYMargin | CPViewMinXMargin | CPViewMinYMargin | CPViewWidthSizable];
-    
-    
-    // zawsze zachowuj stały rozmiar 
-    //[contentArea setAutoresizingMask:CPViewMaxXMargin | CPViewMaxYMargin];
-    
-    
-	
-	[contentView addSubview:contentArea];
-	//[theWindow makeFirstResponder:contentView];
 
-	//console.log([theWindow isMainWindow]);
+
+	// elementy potrzebne tylko by wyróżnić...
+	[contentView setBackgroundColor:[CPColor greenColor]];
+    [contentArea setBackgroundColor:[CPColor redColor]];
+    
+	// dodaj element do widoku
+	[contentView addSubview:contentArea];
+	
+	
+	//[theWindow makeFirstResponder:contentArea];
 
 	self = [super initWithWindow:theWindow];
-	
 	if (self)
 	{
-		console.log("SIWindowController", [[self elements] count]);
+		
 	}
 	
 	return self;
@@ -80,7 +61,6 @@
 - (CPSet)elements
 {
 	var elements = [[self document] elements];
-	console.log("SIWindowController::elements", [elements count]);
 	if (!elements)
 	{
 		elements = [CPSet set];
@@ -88,5 +68,6 @@
 
 	return elements;
 }
+
 
 @end

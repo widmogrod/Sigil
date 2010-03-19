@@ -1,9 +1,5 @@
 @import <Foundation/CPObject.j>
 
-/*
-	Abstrakcyjna klasa elementu dokumentu,
-	ma zaimplementowane wszystkie podstawowe metody
-*/
 @implementation SIElement : CPObject
 {
 	// wartość elementu
@@ -16,33 +12,38 @@
 	// położenie (x,y)
 	(unsigned int) positionX @accessors;
 	(unsigned int) positionY @accessors;
+	
+	CPTextField _textField;
 }
 
 - (id)init
 {
 	self = [super init];
+	
 	if (self)
 	{
+		_textField =  [[CPTextField alloc] initWithFrame:CGRectMakeZero()]; 
+ 
 	}
 
 	return self;
 }
 
-/*
-	Metoda odpowiada za rysowanie elementu 
-	w widoku dokumentu {@see SIElementsView}
-*/
 - (void)viewWillDrawInView:(SIElementsView)anView
 {
-	alert("[SIElement viewWillDrawInView:] musi zostać zaimplementowana");
-}
+	var rect = CGRectMake(positionX, positionY, width, height);
 
-/*
-	Tworzenie wymiaru elementu (CGRect) zrozumiałego dla CP
-*/
-- (CGRect)rect
-{
-	return CGRectMake(positionX, positionY, width, height);
+	[_textField setFrame:rect];
+	
+	/*
+		TODO: Czy poniższe elemnty nie powinny być owiniete w metodę z lazy load?
+	*/
+	[_textField setObjectValue:value]; 
+	[_textField setBezeled:YES]; 
+    [_textField setEditable:NO]; 
+    [_textField sizeToFit];
+    
+	[anView addSubview:_textField];
 }
 
 @end

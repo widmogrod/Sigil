@@ -1,5 +1,15 @@
 @import <Foundation/CPObject.j>
 
+/*
+	Abstrakcyjna klasa elementu dokumentu,
+	ma zaimplementowane wszystkie podstawowe metody
+	
+	TODO: zmienne klasowe są accessorami, czy settery
+		  nie powinny zostać zaimplementowane?
+		  - Zysk z takiego działania była by możliwośc 
+		    wysłania wiadomość do metody o ponownym narysowaniy
+		    
+*/
 @implementation SIElement : CPObject
 {
 	// wartość elementu
@@ -17,12 +27,28 @@
 - (id)init
 {
 	self = [super init];
-	
 	if (self)
 	{
 	}
 
 	return self;
+}
+
+/*
+	Metoda odpowiada za rysowanie elementu 
+	w widoku dokumentu {@see SIElementsView}
+*/
+- (void)viewWillDrawInView:(SIElementsView)anView
+{
+	alert("[SIElement viewWillDrawInView:] musi zostać zaimplementowana");
+}
+
+/*
+	Tworzenie wymiaru elementu (CGRect) zrozumiałego dla CP
+*/
+- (CGRect)rect
+{
+	return CGRectMake(positionX, positionY, width, height);
 }
 
 @end

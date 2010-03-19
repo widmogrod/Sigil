@@ -1,7 +1,7 @@
 @import <AppKit/CPDocument.j>
 
 @import "SIWindowController.j";
-@import "Sigil/SIElement.j";
+@import "Sigil/SIElementText.j";
 
 @implementation SIDocument : CPDocument
 {
@@ -16,25 +16,25 @@
     {
     	_elements = [CPSet set];
 
-    	var firstElement = [[SIElement alloc] init];
+    	var firstElement = [[SIElementText alloc] init];
     	[firstElement setValue:@"To jest testowa wartość1111"];
     	//[firstElement setFontFamily:]
     	//[firstElement setFontSize:]
     	[firstElement setWidth:200];
-    	[firstElement setHeight:30];
-    	[firstElement setPositionX:30];
-    	[firstElement setPositionY:30];
+    	[firstElement setHeight:60];
+    	[firstElement setPositionX:100];
+    	[firstElement setPositionY:100];
     	
     	[_elements addObject:firstElement];
     	
-    	var secondElement = [[SIElement alloc] init];
+    	var secondElement = [[SIElementText alloc] init];
     	[secondElement setValue:@"To jest testowa wartość2222"];
     	//[firstElement setFontFamily:]
     	//[firstElement setFontSize:]
     	[secondElement setWidth:200];
-    	[secondElement setHeight:30];
-    	[secondElement setPositionX:30];
-    	[secondElement setPositionY:30];
+    	[secondElement setHeight:60];
+    	[secondElement setPositionX:200];
+    	[secondElement setPositionY:300];
     	
     	
 		[_elements addObject:secondElement];
