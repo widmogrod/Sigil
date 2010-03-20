@@ -13,7 +13,7 @@
 	self = [super init];
 	if (self)
 	{
-		height = 25.0;
+		height = 35.0;
 
 		_textField =  [[CPTextField alloc] initWithFrame:CGRectMake(0,0,150, height)]; 
 		[_textField setEditable:YES];

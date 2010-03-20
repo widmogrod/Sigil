@@ -24,9 +24,13 @@ Application
 
 SIOption
   - zastanowić się nad dodaniem singletonu dla opcji
+  - opcja Text nie powinna istnieć - ta opcja powinan właczyć inlineEditor dla wartości elementu
 
 SIElement
   - zastanowić się czy nie dodać delegacji zamiast CPNotification (lub to i to w zależności od kontekstu..)
+
+SIElementEditor
+  - utworzyć obiekt odpowiadający za otworzenie okna edycji po podwujnym kliknięciu
 
 SIMenu
   - zaimplementować metody delegate: cut, pastle itp..
