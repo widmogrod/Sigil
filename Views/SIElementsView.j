@@ -16,8 +16,13 @@
 	if (self)
 	{
 		/*
-			Ustaw widok jako obserwator zmiany zaznaczenia
-			pojedyńczego elementu
+			Ustaw widok jako obserwator zmiany wartości elementu
+			TODO: Zastanowic się cz nie zrobić pętli dla każdego elemtnu
+				  i nie dodać [element setDelegate:self]
+				  - teraz jest troszeczkę jak jazda bez trzymanki,
+				  - co będzie jeżeli powstanie dużo nowych dokumentów?
+				  - czy utworzenie nowego dokumentu powoduje że stary znika
+				    * nie, nowy dokument to nowy obiekt
 		*/
 		[[CPNotificationCenter defaultCenter]
 				addObserver:self
@@ -56,6 +61,10 @@
 	return selectedElements;
 }
 
+/*
+	Metoda wywoływany gdy wartość elementu zostanie zmodyfikowana
+	Zmiana wartości elemtnu powoduje że nalerzy go jeszcze raz wyrenderować.
+*/
 - (void)elementDidChangeValue:(CPNotification)aNotification
 {
 	var element = [aNotification object];
@@ -63,6 +72,9 @@
 	[element willDrawInView:self];
 }
 
+/*
+	Rysowanie elementów w tym widoku
+*/
 - (void)viewWillDraw
 {
 	/*

@@ -22,6 +22,12 @@ Application
   - stworzyć i podmienić logo programu (SigilIcon_256x256.png)
   - zmienić favicone
 
+SIOption
+  - zastanowić się nad dodaniem singletonu dla opcji
+
+SIElement
+  - zastanowić się czy nie dodać delegacji zamiast CPNotification (lub to i to w zależności od kontekstu..)
+
 SIMenu
   - zaimplementować metody delegate: cut, pastle itp..
   - [SIMenu setMenuBarIconImage:] - ikona zalerzna od typudokumentu?
@@ -30,6 +36,10 @@ SIMenu
 SIWindowController
   - powinien dodać okno, które będzie singletonem? - to ma być przestrzeń edycji,
     w której nie przewiduję przełanczania się między oknami, czy projektami ..
+
+CPWindow
+  - pamiętać że mogę ustawić delegację..
+
 
 Toolbar:
   - wydzielić jako osobną klasę?
