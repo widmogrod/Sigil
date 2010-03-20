@@ -3,6 +3,8 @@
 @import <AppKit/CPGraphicsContext.j>
 @import <Foundation/CPSet.j>
 
+@import "../Sigil/SIElementManager.j";
+
 
 @implementation SIElementsView : CPView
 {
@@ -36,9 +38,12 @@
 
 - (void)viewWillDraw
 {
-	console.log("viewWillDraw");
+	/*
+		TODO: Czy każdy z elementów będzie (powinien być)
+			  rysowany ponownie podczas zmieniania rozmiaru okna?
+			  - bo między innymi wtedy ta metoda jest wywoływana - ponownie
+	*/
 	var elements = [[self elements] allObjects];
-
 	for (var i = 0; i < [elements count]; i++)
 	{
 		var element = [elements objectAtIndex:i];
@@ -51,9 +56,6 @@
 
 - (void)drawRect:(CPRect)aRect
 {
-	console.log("drawRect");
-	
-
     var bounds = [self bounds],
     	context = [[CPGraphicsContext currentContext] graphicsPort];                           
 
@@ -79,7 +81,24 @@
 */
 - (void)mouseDown:(CPEvent)anEvent
 {
-   console.log("mouseDown");
+	// Relatywne współrzędne kliknięcia (dotyczą tylko tego okna)
+	var location = [anEvent locationInWindow];
+
+	var elements = [[self elements] allObjects];
+	for (var i = 0; i < [elements count]; i++)
+	{
+		var element = [elements objectAtIndex:i];
+		
+		if ([SIElementManager element:element
+						containsPoint:location])
+		{
+			[element setSelected:YES]
+		} else {
+			[element setSelected:No]
+		}
+	}
+
+	[super mouseDown:anEvent];
 }
 
 /*!
@@ -99,6 +118,7 @@
 */
 - (void)mouseUp:(CPEvent)anEvent
 {
+	[super mouseUp:anEvent];
     console.log("mouseUp");
 }
 

@@ -1,6 +1,8 @@
 @import <AppKit/CPDocument.j>
 
-@import "SIWindowController.j";
+@import "Views/SIElementsWindowController.j";
+@import "Views/SIOptionsWindowController.j";
+
 @import "Sigil/SIElementText.j";
 
 @implementation SIDocument : CPDocument
@@ -37,9 +39,7 @@
     	[secondElement setPositionY:300];
     	
     	
-		[_elements addObject:secondElement];
-		
-		console.log('SIDocument', [_elements count])
+		[_elements addObject:secondElement];		
     }
     
     return self;
@@ -52,8 +52,11 @@
 
 - (void)makeWindowControllers
 {
-	var windowController = [[SIWindowController alloc] init];
-	[self addWindowController: windowController];
+	var elementsWindowController = [[SIElementsWindowController alloc] init];
+	[self addWindowController: elementsWindowController];
+	
+	var optionsWindowController = [[SIOptionsWindowController alloc] init];
+	[self addWindowController: optionsWindowController];	
 }
 
 

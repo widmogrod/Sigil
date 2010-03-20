@@ -1,6 +1,11 @@
 @import <Foundation/CPObject.j>
 
 /*
+	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
+*/
+var SIElementDidChangeSelection = @"SIElementDidChangeSelection";
+
+/*
 	Abstrakcyjna klasa elementu dokumentu,
 	ma zaimplementowane wszystkie podstawowe metody
 	
@@ -22,6 +27,8 @@
 	// położenie (x,y)
 	(unsigned int) positionX @accessors;
 	(unsigned int) positionY @accessors;
+	
+	(BOOL) _selected = NO;
 }
 
 - (id)init
@@ -32,6 +39,24 @@
 	}
 
 	return self;
+}
+
+/*
+	Oznacz element jako zaznaczony
+*/
+- (void)setSelected:(BOOL)flag
+{
+	_selected = !!flag;
+	
+	// wyslij powiadomienie że zostało zmienione zaznaczenie elementu
+	[[CPNotificationCenter defaultCenter] 
+			postNotificationName:SIElementDidChangeSelection
+						  object:self];
+}
+
+- (BOOL)selected
+{
+	return _selected;
 }
 
 /*

@@ -44,10 +44,10 @@ Toolbar:
 
 NOTATKI
 -------
- CPViewMaxXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X (minimalnym)
- CPViewMaxYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y (minimalnym)
- CPViewMinXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X (maksymalnym)
- CPViewMinYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y (maksymalnym)
+ CPViewMaxXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X minimalnym (czyli wymiar X maksymalny jest elastyczny)
+ CPViewMaxYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y minimalnym (czyli wymiar Y maksymalny jest elastyczny)
+ CPViewMinXMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze X maksymalnym (czyli wymiar X minimalny jest elastyczny)
+ CPViewMinYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y maksymalnym (czyli wymiar X minimalny jest elastyczny)
 
 
 Autor

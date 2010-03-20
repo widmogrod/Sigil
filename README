@@ -31,6 +31,10 @@ SIWindowController
   - powinien dodać okno, które będzie singletonem? - to ma być przestrzeń edycji,
     w której nie przewiduję przełanczania się między oknami, czy projektami ..
 
+CPWindow
+  - pamiętać że mogę ustawić delegację..
+
+
 Toolbar:
   - wydzielić jako osobną klasę?
   - zmodyfikować grafikę i grafikę alternatywną na przycisku: ToolbarItemAddText

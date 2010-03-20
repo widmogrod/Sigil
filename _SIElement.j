@@ -1,0 +1,193 @@
+SIElementDidSelect = @"SIElementDidSelect";
+
+@implementation SIElement : CPObject
+{
+	// wartość elementu
+	CPString value @accessors;
+	
+	// wysokość i szerokość
+	(unsigned int) width @accessors;
+	(unsigned int) height @accessors;
+
+	// położenie (x,y)
+	(unsigned int) positionX @accessors;
+	(unsigned int) positionY @accessors;
+}
+
+- (id)init
+{
+	self = [super init];
+	
+	if (self)
+	{
+	}
+
+	return self;
+}
+
+
+/*
+	Zwraca tablicę zawierającą typy obsługiwanych w narzędziuwce..
+	
+*/
+- (void)elementAvalibleOptionsTypes
+{
+	/*
+		Element narzędziówki jest singletonem..
+		
+		================
+		- tworzone są elementy narzędziówki (własności, które się w niej wyświetlają)
+		- elementy narzędziówki są powiązane z własnościami obiektu
+		- obiekt narzędziówki jest singletonem?	
+	*/
+	
+	return [SIElementOptionTypeFont];
+	
+	//SIElementOptionManager
+	[SIElementOptionFont addElement:self
+							selector:@selector(elementFontTypeChange:)];
+}
+
+- (void)elementSelected
+{
+	/*
+		Powiadamienie że element został zaznaczony
+		
+		- utwórz opcje elementu
+		  
+			[self setupHasOptions];
+			
+		- lub niech poziom wyrzej.. wykonuje inicjowanie parametrów obiektu
+		  tj. np. manager
+	*/
+	
+	[[CPNotificationCenter defaultCenter] postNotificationName:@"SIElementDidSelect" object:self];
+}
+
+/*
+	Metoda wywoływana gdy zostanie zmieniony parametr czcionki w Narzędziówce
+*/
+- (void)elementFontTypeChange:(CPFont)anFont
+{
+	/*
+		Sprawdz czy element zaznaczony
+	*/
+	if (selected)
+	{
+	}
+}
+
+@end
+
+
+/*
+	Wizualizacja zaznaczonych elementów
+*/
+@implementation SIElementOptionManagerView : CPView
+{
+}
+
+- (void)elementDidSelect:(SIElement)anElement
+{
+	var elements = [XXX selectedElements];
+	elements
+	
+	[[CPNotificationCenter self]
+			addObserver:self
+			   selector:@selector(elementDidSelect:)
+			       name:@"MySliderDidChangeValue"
+ 			     object:nil];
+}
+
+@end
+
+/*
+	Manadzer opcji, przechowywuje informacje jakie opcje zostały zdefiniowane
+*/
+@implementation SIElementOptionManager : CPObject
+{}
+
++ (SIElementOptionManager)shared
+{
+	/*
+		Singleton
+	*/
+}
+
+/*
+	Wybranie opcji które maja się pokazać w narzędziuwce dla zaznaczonych elementów
+*/
+- (CPArray)optionsForSelectedElements
+{}
+
+/*
+	Rejestruje element dla danego typu w narzędziówce,
+	metoda jest wywoływana 
+	
+	przykładowe (możliwe) typy:
+	  - SIElementOptionTypeFont
+*/
+- (void)registerOptionType:(SIElementOption)anElementOption forElement:(SIElement)anElement
+{}
+
+
+@end
+
+/*
+	Abstrakcja opcji elementu w narzędziuwce
+*/
+@implementation SIElementOption : CPObject
+{}
+
+- (id)init
+{
+	/*
+	*/
+}
+
+/*
+	Czy element widocny w narzędziuwce
+*/
+- (void)setHidden:(BOOL)flag
+{}
+
+
+/*
+	Czy element z możliwością zmiany wartości..
+	  - gdy zaznaczone kilka obikektów, w których 
+	    ta opcja jest nie wspólna; wtedy wyłączony ale widoczny..
+*/
+- (void)setEnabled:(BOOL)flag
+{}
+
+/*
+	Czy element widoczny
+*/
+- (void)setHidden:(BOOL)flag
+{}
+
+@end
+
+
+/*
+	Specjalizacja opcji elementu,
+	Możliwośc zmiany czcionki elementu
+*/
+@implementation SIElementOptionFont : CPObject
+{}
+
+- (void)addElement:(SIElement)anElement selector:(SEL)selector
+{
+	/*
+		Dodaj do obserwowanych
+	*/
+}
+
+- (void)onChangeValue
+{
+	/*
+		Powiadom zaznaczony(zaznaczone elementy) że wartość została zmienona
+	*/
+}
+
+@end

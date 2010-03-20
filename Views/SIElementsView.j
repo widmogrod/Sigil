@@ -3,6 +3,8 @@
 @import <AppKit/CPGraphicsContext.j>
 @import <Foundation/CPSet.j>
 
+@import "../Sigil/SIElementManager.j";
+
 
 @implementation SIElementsView : CPView
 {
@@ -79,7 +81,24 @@
 */
 - (void)mouseDown:(CPEvent)anEvent
 {
-   console.log("mouseDown");
+	// Relatywne współrzędne kliknięcia (dotyczą tylko tego okna)
+	var location = [anEvent locationInWindow];
+
+	var elements = [[self elements] allObjects];
+	for (var i = 0; i < [elements count]; i++)
+	{
+		var element = [elements objectAtIndex:i];
+		
+		if ([SIElementManager element:element
+						containsPoint:location])
+		{
+			[element setSelected:YES];
+		} else {
+			[element setSelected:NO];
+		}
+	}
+
+	[super mouseDown:anEvent];
 }
 
 /*!
@@ -99,6 +118,7 @@
 */
 - (void)mouseUp:(CPEvent)anEvent
 {
+	[super mouseUp:anEvent];
     console.log("mouseUp");
 }
 

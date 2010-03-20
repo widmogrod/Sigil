@@ -40,7 +40,7 @@
 	[contentView setBackgroundColor:[CPColor greenColor]];
     [contentArea setBackgroundColor:[CPColor redColor]];
     
-	// dodaj element do widoku
+	// dodaj element remnderujący elementy do widoku
 	[contentView addSubview:contentArea];
 	
 	
@@ -53,6 +53,11 @@
 	}
 	
 	return self;
+}
+
+- (void)windowWillClose:(id)aSender
+{
+	console.log("windowWillClose");
 }
 
 /*
@@ -68,6 +73,5 @@
 
 	return elements;
 }
-
 
 @end

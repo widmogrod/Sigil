@@ -5,7 +5,7 @@
 
 // Globale dla aplikacji
 SISitebarLeftWidth = 200.0;
-SIToolbarHeight = 57.0;
+SIToolbarHeight = 59.0;
 SIMenubarHeight = 29.0;
 SIToolbarAndMenubarHeight = SIToolbarHeight + SIMenubarHeight;
 
