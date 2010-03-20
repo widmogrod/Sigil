@@ -5,12 +5,11 @@
 
 @import <Foundation/CPSet.j>
 
-//@import "../Sigil/SIElementManager.j";
+@import "../Sigil/SIElementManager.j";
 
 
 @implementation SIOptionsView : CPView
 {
-	CPTextField _textField;
 }
 
 - (id)initWithFrame:(CGRect)aFrame
@@ -18,22 +17,15 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
-		_textField =  [[CPTextField alloc] initWithFrame:CGRectMake(0,0,150,40)]; 
-		[_textField setEditable:YES];
-		[_textField setBezeled:YES];
-		
-		[self addSubview:_textField];
-
-		//[[CPNotificationCenter defaultCenter] postNotificationName:CPControlTextDidChangeNotification object:self userInfo
-
-/*
+		/*
+			Ustaw widok jako obserwator zmiany zaznaczenia
+			pojedyńczego elementu
+		*/
 		[[CPNotificationCenter defaultCenter]
 				addObserver:self
 				   selector:@selector(elementDidChangeSelection:)
 					   name:SIElementDidChangeSelectionNotification
 	 			     object:nil];
-
-*/	
 	}
 
 	return self;
@@ -52,34 +44,72 @@
 	return elements;
 }
 
+/*
+	Zwracanie zestawu elementów, które są zaznaczone
+*/
+- (CPSet)selectedElements
+{
+	var selectedElements = [[[self window] windowController] selectedElements];
+	if (!selectedElements)
+	{
+		selectedElements = [CPSet set];
+	}
+
+	return selectedElements;
+}
+
+
 - (void)viewWillDraw
 {
+	/* @var elements CPArray */
+	var elements = [[self selectedElements] allObjects];
 
+	for (var i=0; i < [elements count]; i++)
+	{
+		/* @var element SIElement */
+		var element = [elements objectAtIndex:i];
+
+		/*
+			Tutaj dzieje się magia
+			- element zwraca informacje jakie opcje dla elementu będą rysowane,
+			- elementy są dodawane do tego widoku
+			- ustawiane są odpowiednie opcje
+		*/
+		[SIElementManager element:element willDrawOptionsInView:self];
+	}
 }
 
-/*
 - (void)drawRect:(CPRect)aRect
-{	
+{
+	
 }
-*/
 
 - (void)elementDidChangeSelection:(CPNotification)aNotification
 {
-	/* @var element SIElememt*/
-	var element = [aNotification object];
-	var value  = [element value];
 
-	if ([element selected])
-	{
+	/*
+		powinno zadziałać ponowne wyrenderowanie okna
+	*/ 
+	[self setNeedsDisplay:YES];
+	
+	//[self viewWillDraw];
+
+	/* @var element SIElememt*/
+	//var element = [aNotification object];
+	/* @var selected BOOL */
+	//var selected = [aNotification userInfo];
+
+	//if ([element selected])
+	//{
 		/*
 		[[CPNotificationCenter defaultCenter]
 				addObserver:self
 				   selector:@selector(controlTextDidChange:)
 					   name:CPControlTextDidChangeNotification
 	 			     object:element];*/
-	} else {
-		[[CPNotificationCenter defaultCenter] removeObserver:self];
-	}
+	//} else {
+	//	[[CPNotificationCenter defaultCenter] removeObserver:self];
+	//}
 }
 
 /*

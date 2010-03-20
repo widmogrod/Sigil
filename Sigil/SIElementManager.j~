@@ -17,4 +17,24 @@
 	return CGRectContainsPoint([element rect], point);
 }
 
+/*
+	Renderowanie opcji dla zaznaczonych elementów w przekazanym widoku
+
+	TODO: Dodać możliwość generowania opcji dla kilku zaznaczonych elementów
+*/
++ (void)element:(SIElement)anElement willDrawOptionsInView:(SIOptionsView)aView
+{
+	/* options CPArray*/
+	var options = [anElement elementOptions];
+	for(var i=0; i < [options count]; i++)
+	{
+		/* option SIOption */
+		var option = [options objectAtIndex:i];
+
+		/*
+			Rysowanie opcji - cała magia.. ;P
+		*/
+		[option willDrawInView:aView];
+	}
+}
 @end

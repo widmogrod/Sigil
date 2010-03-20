@@ -3,7 +3,8 @@
 /*
 	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
 */
-SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification";
+SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification",
+SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 
 /*
 	Abstrakcyjna klasa elementu dokumentu,
@@ -13,12 +14,14 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 		  nie powinny zostać zaimplementowane?
 		  - Zysk z takiego działania była by możliwośc 
 		    wysłania wiadomość do metody o ponownym narysowaniy
+
+	TODO: Czy dodać może delegacje zamiast notification center?
 		    
 */
 @implementation SIElement : CPObject
 {
 	// wartość elementu
-	CPString value @accessors;
+	CPString _value;
 	
 	// wysokość i szerokość
 	(unsigned int) width @accessors;
@@ -28,7 +31,7 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 	(unsigned int) positionX @accessors;
 	(unsigned int) positionY @accessors;
 	
-	(BOOL) _selected = NO;
+	(BOOL) _selected;
 }
 
 - (id)init
@@ -36,6 +39,7 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 	self = [super init];
 	if (self)
 	{
+		_selected = NO;
 	}
 
 	return self;
@@ -47,11 +51,12 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 - (void)setSelected:(BOOL)flag
 {
 	_selected = !!flag;
-	
+
 	// wyslij powiadomienie że zostało zmienione zaznaczenie elementu
 	[[CPNotificationCenter defaultCenter] 
-			postNotificationName:SIElementDidChangeSelection
-						  object:self];
+			postNotificationName:SIElementDidChangeSelectionNotification
+						  object:self
+						userInfo:_selected];
 }
 
 - (BOOL)selected
@@ -59,13 +64,24 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 	return _selected;
 }
 
-/*
-	Metoda odpowiada za rysowanie elementu 
-	w widoku dokumentu {@see SIElementsView}
-*/
-- (void)viewWillDrawInView:(SIElementsView)anView
+- (void)setValue:(CPString)aValue
 {
-	alert("[SIElement viewWillDrawInView:] musi zostać zaimplementowana");
+	// tworzenie słownika z parą vartość klucz
+	var dict = [CPDictionary dictionaryWithObjectsAndKeys:aValue, @"newValue", _value, @"oldValue"];
+
+	// ustaw nową wartość
+	_value = aValue;
+
+	// wyslij powiadomienie że zostało zmieniona wartość elementu
+	[[CPNotificationCenter defaultCenter] 
+			postNotificationName:SIElementDidChangeValueNotification
+						  object:self
+						userInfo: dict];
+}
+
+- (void)value
+{
+	return _value;
 }
 
 /*
@@ -76,4 +92,22 @@ SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotificat
 	return CGRectMake(positionX, positionY, width, height);
 }
 
+/*
+	Metoda odpowiada za rysowanie elementu 
+	w widoku dokumentu {@see SIElementsView}
+*/
+- (void)willDrawInView:(SIElementsView)anView
+{
+	alert("[SIElement willDrawInView:] musi zostać zaimplementowana");
+}
+
+/*
+	Metoda jest specjalizowana w nad klasie (czy nad klasa - czy pod klasa :/ ),
+	Zwraca tablicę zawierającą nazwy opcji elementów
+*/
+- (CPArray)elementOptions
+{
+	alert("[SIElement elementOptions:] musi zostać zaimplementowana");
+	
+}
 @end

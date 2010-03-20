@@ -1,5 +1,4 @@
 @import <AppKit/CPWindowController.j>
-@import <AppKit/CPView.j>
 
 @import "SIElementsView.j"
 
@@ -67,6 +66,17 @@
 	}
 
 	return elements;
+}
+
+- (CPSet)selectedElements
+{
+	var selectedElements = [[self document] selectedElements];
+	if (!selectedElements)
+	{
+		selectedElements = [CPSet set];
+	}
+
+	return selectedElements;
 }
 
 @end

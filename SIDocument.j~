@@ -37,7 +37,7 @@
     	[secondElement setHeight:60];
     	[secondElement setPositionX:200];
     	[secondElement setPositionY:300];
-    	
+    	[secondElement setSelected:YES];
     	
 		[_elements addObject:secondElement];		
     }
@@ -50,14 +50,40 @@
 	return _elements;
 }
 
+/*
+	Zwracanie zestawu elementów, które są zaznaczone
+*/
+- (CPSet)selectedElements
+{
+	var selected = [_elements copy];
+	var elements = [selected allObjects];
+	for(var i=0; i < [elements count]; i++)
+	{
+		var element = [elements objectAtIndex:i];
+		if (![element selected])
+		{
+			[selected removeObject:element];
+		}
+	}
+
+	return selected;
+}
+
 - (void)makeWindowControllers
 {
-	//var elementsWindowController = [[SIElementsWindowController alloc] init];
-	//[self addWindowController: elementsWindowController];
+	/*
+		TODO: Czy te okna w kontrolerze nie powinny być sinlegonem?
+			  - okno opcji wydaje mi się że powinno być jak najbardziej,
+			  - nie jestem pewien co do okna wizualizacji elementów..
+	*/
+
+	// dodaj kontroler okna wizualizacji elementów
+	var elementsWindowController = [[SIElementsWindowController alloc] init];
+	[self addWindowController: elementsWindowController];
 	
+	// dodaj kontroler okna edycji opcji zaznaczonego elementu
 	var optionsWindowController = [[SIOptionsWindowController alloc] init];
 	[self addWindowController: optionsWindowController];	
 }
-
 
 @end

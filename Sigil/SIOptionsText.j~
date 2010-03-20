@@ -1,0 +1,16 @@
+@import <Foundation/CPObject.j>
+
+/*
+	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
+*/
+SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification";
+
+/*
+		    
+*/
+@implementation SIOptionsText : SIOptions
+{
+	
+}
+
+@end

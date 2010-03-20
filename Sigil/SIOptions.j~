@@ -1,0 +1,42 @@
+@import <Foundation/CPObject.j>
+
+/*
+	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
+*/
+SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification";
+
+/*
+		    
+*/
+@implementation SIOptions : CPObject
+{
+	SIElement _element;
+}
+
+- (id)initWithElement:(SIElement)anElement
+{
+	self = [super init];
+	if (self)
+	{
+		[self setElement:anElement];
+	}
+
+	return self;
+}
+
+- (void)drawInView:(CPView)aView
+{
+	
+}
+
+- (void)setElement:(SIElement)anElement
+{
+	_element = anElement;
+}
+
+- (SIElement)element
+{
+	return _element;
+}
+
+@end

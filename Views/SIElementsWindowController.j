@@ -68,4 +68,18 @@
 	return elements;
 }
 
+/*
+	Zwracanie zestawu elementów, które są zaznaczone
+*/
+- (CPSet)selectedElements
+{
+	var selectedElements = [[self document] selectedElements];
+	if (!selectedElements)
+	{
+		selectedElements = [CPSet set];
+	}
+
+	return selectedElements;
+}
+
 @end

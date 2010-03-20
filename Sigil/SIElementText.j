@@ -1,4 +1,5 @@
 @import "SIElement.j"
+@import "SIOptionText.j"
 
 @implementation SIElementText : SIElement
 {
@@ -16,7 +17,7 @@
 	return self;
 }
 
-- (void)viewWillDrawInView:(SIElementsView)anView
+- (void)willDrawInView:(SIElementsView)anView
 {
 	[_textField setFrame: [self rect]];
 	
@@ -25,7 +26,7 @@
 			  - Być może tak i do tego funkcjonalność rysowania powinna również
 			    zostać zaimplementowana w {@see SIElement};
 	*/
-	[_textField setObjectValue:value]; 
+	[_textField setObjectValue:_value]; 
 	[_textField setBezeled:YES]; 
     [_textField setEditable:NO]; 
     [_textField sizeToFit];
@@ -33,4 +34,10 @@
 	[anView addSubview:_textField];
 }
 
+- (CPArray)elementOptions
+{
+	var text = [[SIOptionText alloc] initWithElement:self];
+
+	return [text];
+}
 @end

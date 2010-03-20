@@ -15,7 +15,15 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
-		
+		/*
+			Ustaw widok jako obserwator zmiany zaznaczenia
+			pojedyńczego elementu
+		*/
+		[[CPNotificationCenter defaultCenter]
+				addObserver:self
+				   selector:@selector(elementDidChangeValue:)
+					   name:SIElementDidChangeValueNotification
+	 			     object:nil];
 	}
 
 	return self;
@@ -34,6 +42,27 @@
 	return elements;
 }
 
+/*
+	Zwracanie zestawu elementów, które są zaznaczone
+*/
+- (CPSet)selectedElements
+{
+	var selectedElements = [[[self window] windowController] selectedElements];
+	if (!selectedElements)
+	{
+		selectedElements = [CPSet set];
+	}
+
+	return selectedElements;
+}
+
+- (void)elementDidChangeValue:(CPNotification)aNotification
+{
+	vat element = [aNotification object];
+
+	[element willDrawInView:self];
+}
+
 - (void)viewWillDraw
 {
 	/*
@@ -46,9 +75,10 @@
 	{
 		var element = [elements objectAtIndex:i];
 		
-		console.log([element value]);
-		
-		[element viewWillDrawInView:self];
+		/*
+			Rysujemy elementy .. magic ;]
+		*/
+		[element willDrawInView:self];
 	}
 }
 
