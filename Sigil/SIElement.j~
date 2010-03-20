@@ -3,7 +3,7 @@
 /*
 	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
 */
-var SIElementDidChangeSelection = @"SIElementDidChangeSelection";
+SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification";
 
 /*
 	Abstrakcyjna klasa elementu dokumentu,

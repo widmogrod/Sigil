@@ -3,7 +3,7 @@
 /*
 	Powiadomienie wysyłane gdy zmienia się stan zaznaczenia elementu
 */
-var SIElementDidChangeSelection = @"SIElementDidChangeSelection";
+SIElementDidChangeSelectionNotification = @"SIElementDidChangeSelectionNotification";
 
 /*
 	Abstrakcyjna klasa elementu dokumentu,
@@ -50,7 +50,7 @@ var SIElementDidChangeSelection = @"SIElementDidChangeSelection";
 	
 	// wyslij powiadomienie że zostało zmienione zaznaczenie elementu
 	[[CPNotificationCenter defaultCenter] 
-			postNotificationName:SIElementDidChangeSelection
+			postNotificationName:SIElementDidChangeSelectionNotification
 						  object:self];
 }
 

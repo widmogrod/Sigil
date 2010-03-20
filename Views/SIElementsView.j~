@@ -15,9 +15,7 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
-		var button = [[CPButton alloc] initWithFrame:CGRectMake(60,60,100,20)];
-		[button setTitle:@"reload"];
-		[self addSubview:button];
+		
 	}
 
 	return self;
@@ -92,9 +90,9 @@
 		if ([SIElementManager element:element
 						containsPoint:location])
 		{
-			[element setSelected:YES]
+			[element setSelected:YES];
 		} else {
-			[element setSelected:No]
+			[element setSelected:NO];
 		}
 	}
 

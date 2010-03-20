@@ -1,6 +1,7 @@
 @import <AppKit/CPWindowController.j>
 @import <AppKit/CPView.j>
 
+@import "SIOptionsView.j";
 
 @implementation SIOptionsWindowController: CPWindowController
 {}
@@ -20,7 +21,7 @@
 		var platformBounds = [[theWindow platformWindow] nativeContentRect];
 
 		// Pozycjonowaniue CPWindow w odpowiednim miejscu
-		[theWindow setFrameOrigin:CGPointMake(0, 0)];
+		[theWindow setFrameOrigin:CGPointMake(0, SIToolbarAndMenubarHeight)];
 		[theWindow setFrameSize:CGSizeMake(SISitebarLeftWidth, 
 										   CGRectGetHeight(platformBounds) - SIToolbarAndMenubarHeight)];
 

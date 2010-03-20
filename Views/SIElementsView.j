@@ -15,9 +15,6 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
-		var button = [[CPButton alloc] initWithFrame:CGRectMake(60,60,100,20)];
-		[button setTitle:@"reload"];
-		[self addSubview:button];
 	}
 
 	return self;

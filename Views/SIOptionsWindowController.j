@@ -1,6 +1,7 @@
 @import <AppKit/CPWindowController.j>
 @import <AppKit/CPView.j>
 
+@import "SIOptionsView.j";
 
 @implementation SIOptionsWindowController: CPWindowController
 {}
@@ -32,7 +33,7 @@
 		var bounds = [contentView bounds];
 
 		// Dodaj widok, w którym będą renderowane elementy
-		var contentArea = [[CPView alloc] initWithFrame:CGRectMake(10, 10,
+		var contentArea = [[SIOptionsView alloc] initWithFrame:CGRectMake(10, 10,
 																	CGRectGetWidth(bounds)-20,
 																	CGRectGetHeight(bounds)-20)];
 		// zachowuj sie elastycznie
