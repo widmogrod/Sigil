@@ -33,7 +33,7 @@
     [_textField setEditable:NO]; 
     [_textField sizeToFit];
     
-	[[anView superview] addSubview:_textField];
+	[anView addSubview:_textField];
 	/*
 	[[_anView superview] addSubview:self
 							   positioned:CPWindowBelow

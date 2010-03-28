@@ -174,21 +174,25 @@
     over it. A drag is a mouse movement while the left button is down.
     @param anEvent contains information about the drag
 */
+/*
 - (void)mouseDragged:(CPEvent)anEvent
 {
 	//console.log([anEvent locationInWindow].x, [anEvent locationInWindow].y);
     //console.log("mouseDragged");
     [super mouseDragged:anEvent];
 }
+*/
 
 /*!
     Notifies the receiver that the user has released the left mouse button.
     @param anEvent contains information about the release
 */
+/*
 - (void)mouseUp:(CPEvent)anEvent
 {
 	[super mouseUp:anEvent];
 }
+*/
 
 /*!
     Notifies the receiver that the user has moved the mouse (with no buttons down).

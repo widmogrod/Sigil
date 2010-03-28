@@ -13,6 +13,7 @@ SIElementEditorViewShared = nil;
 @implementation SIElementEditorView : CPView
 {
 	SIElement 			_element;
+	SIElement 			_elementDefault;
 	SIElementsView 		_elementsView;
 	
 	CPTextField 		_textField;
@@ -21,6 +22,7 @@ SIElementEditorViewShared = nil;
 	CALayer				_rootLayer;
 
 	
+	(unsigned int)		_layerPaddingElementSize;
 	(unsigned int)		_handleSize;
 
 	CGRect 				_handleTopLeft;
@@ -49,6 +51,9 @@ SIElementEditorViewShared = nil;
     {
     	// ustaw domyślny rozmiar uchwytów
     	_handleSize = 8;
+    	
+    	// ustaw domyślny rozmiar odstępu warstwy od edytowanego elementu
+    	_layerPaddingElementSize = 10;
     	
     	_rootLayer = [CALayer layer];
         
@@ -80,13 +85,74 @@ SIElementEditorViewShared = nil;
 {
 }
 
-- (void)mouseMoved:(CPEvent)anEvent
+- (void)mouseDragged:(CPEvent)anEvent
 {
+	/* location CGPoint */
+	var location = [anEvent locationInWindow];
+
+	// konwertuje położenie myszki dla tego widoku względem głównego okna
+	var point = [self convertPoint:location 
+						  fromView:[[_elementsView window] contentView]];
+console.log(point.x, point.y);
+	// alternatywny sposób wykonania tego samego.. z tym że teraz jest implicite
+	// o jakim oknie mowa..
+	// [self convertPoint:location fromView:nil];
+	
+	
+	// kliknieto górny lewy róg
+	if (CGRectContainsPoint(_handleTopLeft, point))
+	{
+		//_handleTopLeft.origin.x += point.x;
+		//_handleTopLeft.origin.y += point.y;
+		[self setFrameOrigin:location];
+		//console.log(_handleTopLeft.origin, [self frameOrigin], [self convertPoint:location fromView:[[_elementsView window] contentView]]);
+		
+		console.log("kliknieto górny lewy róg", _handleTopLeft.origin.x);
+		//[_elementsView setNeedsDisplay:YES];
+	} else
+	// kliknieto górny prawy róg
+	if (CGRectContainsPoint(_handleTopRight, point))
+	{
+		console.log("kliknieto górny prawy róg");
+	} else
+	// kliknieto dolny lewy róg
+	if (CGRectContainsPoint(_handleBottomLeft, point))
+	{
+		console.log("kliknieto dolny lewy róg");
+	} else
+	// kliknieto dolny prawy róg
+	if (CGRectContainsPoint(_handleBottomRight, point))
+	{
+		console.log("kliknieto dolny prawy róg");
+	} else
+	// przesuń element
+	{
+		/*
+		[_element setPositionX:location.x];
+		[_element setPositionY:location.y];
+		[_elementsView setNeedsDisplay:YES];
+
+		[self setFrameOrigin:location];		
+		*/
+	}
+/*
+	[CPApp setTarget:self 
+		    	selector:@selector(resizeElement:) 
+forNextEventMatchingMask:CPLeftMouseDraggedMask | CPLeftMouseUpMask 
+			   untilDate:nil 
+			   	  inMode:nil 
+			   	 dequeue:YES];
+*/
+}
+
+- (void)resizeElement:(CPEvent)anEvent
+{
+	console.log("resizeElement");
 }
 
 - (void)mouseExited:(CPEvent)anEvent
 {
-	console.log("ex2");
+	
 }
 
 - (void)setElement:(SIElement)anElement
@@ -95,6 +161,7 @@ SIElementEditorViewShared = nil;
 		return;
 	
 	_element = anElement;
+	_elementDefault = anElement;
 	
 	/* @var elementsView SIElementsView */
 	var elementsView = [_element elementsView];
@@ -153,13 +220,13 @@ SIElementEditorViewShared = nil;
 	var bounds = [_element bounds];
 
 	// oblicz punk zaczepienia okna do edycji
-    [self setFrameOrigin: CGPointMake(CGRectGetMinX(bounds)-5,
-    								 CGRectGetMinY(bounds)-5)];
+    [self setFrameOrigin: CGPointMake(CGRectGetMinX(bounds) - _layerPaddingElementSize,
+    								 CGRectGetMinY(bounds) - _layerPaddingElementSize)];
 
 	// oblicz wilkośc wymiaru okna w zależności
 	// czy jest to edycja czy przesunięcie/"zmina rozmiru" elementu
-	[self setFrameSize: CGSizeMake(CGRectGetWidth(bounds)+10,
-    								 CGRectGetHeight(bounds)+10)];
+	[self setFrameSize: CGSizeMake(CGRectGetWidth(bounds) + (2 * _layerPaddingElementSize),
+    								 CGRectGetHeight(bounds) + (2 * _layerPaddingElementSize))];
 
 	// Druga metoda pozycjonowania
 	[_elementsView addSubview:self

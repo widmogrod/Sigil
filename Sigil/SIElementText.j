@@ -29,7 +29,7 @@
 			    zostać zaimplementowana w {@see SIElement};
 	*/
 	[_textField setObjectValue:_value]; 
-	[_textField setBezeled:YES]; 
+	[_textField setBezeled:NO]; 
     [_textField setEditable:NO]; 
     [_textField sizeToFit];
     

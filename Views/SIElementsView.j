@@ -133,6 +133,7 @@
 	[super mouseDown:anEvent];
 
 	// Relatywne współrzędne kliknięcia (dotyczą tylko tego okna)
+	/* location CGPoint */
 	var location = [anEvent locationInWindow];
 
 	var sharedElementEditorView = [SIElementEditorView sharedElementEditorView];
