@@ -71,6 +71,24 @@ NOTATKI
  CPViewMinYMargin - podczas rozszerzania okana zachowój stałą przestrzeń w wymiarze Y maksymalnym (czyli wymiar X minimalny jest elastyczny)
 
 
+Dodanie nie wszystkie zdarzenia myszy są włączone domyślnie (moved, exited,entered)
+związane jest to z wydajnością.
+Żeby włączyć obsługę wszystkich zdarzeń nalezy wysłać wiadomość do CPWindow
+
+	[theWindow setAcceptsMouseMovedEvents:YES];
+
+Kolejnym bardzo ważnym elementem jest przekazwyanie tych zdarzeń do elementów w hierarchi widoku (addSubview).
+Gdy dodawane są elementy w sposób:
+	[aView addSubview:element]
+	- są wszystkie zdarzenia
+	
+	[[aView superview] addSubview:element] 
+	- zdarzenia zaimplementowane mogą być nierozpoznawane, wynika to 
+	  z tąd iż dodanie widoku do wioku głównego zmienia jego pozycję Z (z-index)
+	  i zdarzenie może nie być przekazane do niego..
+	
+	
+
 Autor
 -----
 Pomysłodawcą i wykonawcą tej aplikacji jest Gabriel Habryn.

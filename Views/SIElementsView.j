@@ -4,6 +4,7 @@
 @import <Foundation/CPSet.j>
 
 @import "../Sigil/SIElementManager.j";
+@import "SIElementEditorView.j";
 
 
 @implementation SIElementsView : CPView
@@ -77,6 +78,7 @@
 */
 - (void)viewWillDraw
 {
+	console.log("RYSOWANIE:!");
 	/*
 		TODO: Czy każdy z elementów będzie (powinien być)
 			  rysowany ponownie podczas zmieniania rozmiaru okna?
@@ -87,6 +89,11 @@
 	{
 		var element = [elements objectAtIndex:i];
 		
+
+		// TODO: czy nie lepiej tak?		
+		[element setElementsView:self];
+		//[element setNeedsDisplay:YES];
+
 		/*
 			Rysujemy elementy .. magic ;]
 		*/
@@ -94,8 +101,10 @@
 	}
 }
 
+
 - (void)drawRect:(CPRect)aRect
 {
+/*
     var bounds = [self bounds],
     	context = [[CPGraphicsContext currentContext] graphicsPort];                           
 
@@ -111,7 +120,7 @@
 	CGContextFillPath(context);	
 	//CGContextRestoreGState(context);	
 	//CGContextStrokePath(context);
-	
+*/
 }
 
 
@@ -121,8 +130,14 @@
 */
 - (void)mouseDown:(CPEvent)anEvent
 {
+	[super mouseDown:anEvent];
+
 	// Relatywne współrzędne kliknięcia (dotyczą tylko tego okna)
 	var location = [anEvent locationInWindow];
+
+	var sharedElementEditorView = [SIElementEditorView sharedElementEditorView];
+
+	console.log([anEvent clickCount]);
 
 	var elements = [[self elements] allObjects];
 	for (var i = 0; i < [elements count]; i++)
@@ -133,12 +148,25 @@
 						containsPoint:location])
 		{
 			[element setSelected:YES];
+
+			[sharedElementEditorView setElement:element];
+
+			if ([anEvent clickCount] > 1)
+			{
+				//[sharedElementEditorView displayEditable];
+			} else
+			if ([anEvent clickCount] == 1)
+			{
+				//[sharedElementEditorView displayEditable];
+				[sharedElementEditorView displayResizable];
+			}
+
 		} else {
 			[element setSelected:NO];
+
+			//[sharedElementEditorView setElement:nil view:nil];
 		}
 	}
-
-	[super mouseDown:anEvent];
 }
 
 /*!
@@ -146,21 +174,25 @@
     over it. A drag is a mouse movement while the left button is down.
     @param anEvent contains information about the drag
 */
+/*
 - (void)mouseDragged:(CPEvent)anEvent
 {
-	console.log([anEvent locationInWindow].x, [anEvent locationInWindow].y);
-    console.log("mouseDragged");
+	//console.log([anEvent locationInWindow].x, [anEvent locationInWindow].y);
+    //console.log("mouseDragged");
+    [super mouseDragged:anEvent];
 }
+*/
 
 /*!
     Notifies the receiver that the user has released the left mouse button.
     @param anEvent contains information about the release
 */
+/*
 - (void)mouseUp:(CPEvent)anEvent
 {
 	[super mouseUp:anEvent];
-    console.log("mouseUp");
 }
+*/
 
 /*!
     Notifies the receiver that the user has moved the mouse (with no buttons down).
@@ -168,22 +200,25 @@
 */
 - (void)mouseMoved:(CPEvent)anEvent
 {
-    console.log("mouseMoved");
+	[super mouseMoved:anEvent];
 }
 
 - (void)mouseEntered:(CPEvent)anEvent
 {
-    console.log("mouseEntered");
+	[super mouseEntered:anEvent];
 }
 
 /*!
     Notifies the receiver that the mouse exited the receiver's area.
     @param anEvent contains information about the exit
 */
+
+/*
 - (void)mouseExited:(CPEvent)anEvent
 {
-    console.log("mouseExited");
+	[super mouseExited:anEvent];
 }
+*/
 
 /*!
     Notifies the receiver that the mouse scroll wheel has moved.
@@ -191,7 +226,7 @@
 */
 - (void)scrollWheel:(CPEvent)anEvent
 {
-    console.log("scrollWheel");
+    [super scrollWheel:anEvent];
 }
 
 /*!
@@ -200,7 +235,7 @@
 */
 - (void)keyDown:(CPEvent)anEvent
 {
-    console.log("keyDown");
+    [super keyDown:anEvent];
 }
 
 /*!
@@ -209,7 +244,7 @@
 */
 - (void)keyUp:(CPEvent)anEvent
 {
-    console.log("keyUp");
+    [super keyUp:anEvent];
 }
 
 @end

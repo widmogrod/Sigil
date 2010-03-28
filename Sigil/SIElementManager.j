@@ -11,10 +11,10 @@
 /*
 	Sprawdza czy punk zawiera się w kwadraturze elementu (w polu elementu)
 */
-+ (BOOL)element:(SIElement)element containsPoint:(CGPoin)point
++ (BOOL)element:(SIElement)anElement containsPoint:(CGPoin)aPoint
 {
 	// sprawdź czy punk jest w polu obiektu
-	return CGRectContainsPoint([element rect], point);
+	return CGRectContainsPoint([anElement rect], aPoint);
 }
 
 /*

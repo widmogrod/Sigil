@@ -16,22 +16,26 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 		    wysłania wiadomość do metody o ponownym narysowaniy
 
 	TODO: Czy dodać może delegacje zamiast notification center?
+		  - dodałem setElementsView
 		    
 */
 @implementation SIElement : CPObject
 {
 	// wartość elementu
-	CPString _value;
+	CPString 			_value;
 	
 	// wysokość i szerokość
-	(unsigned int) width @accessors;
-	(unsigned int) height @accessors;
+	(unsigned int) 		width @accessors;
+	(unsigned int) 		height @accessors;
 
 	// położenie (x,y)
-	(unsigned int) positionX @accessors;
-	(unsigned int) positionY @accessors;
+	(unsigned int) 		positionX @accessors;
+	(unsigned int) 		positionY @accessors;
 	
-	(BOOL) _selected;
+	(BOOL) 				_selected;
+	
+	// widok w którym element jest wyświetlany
+	SIElementsView 		_elementsView @accessors(property=elementsView);
 }
 
 - (id)init
@@ -57,6 +61,8 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 			postNotificationName:SIElementDidChangeSelectionNotification
 						  object:self
 						userInfo:_selected];
+
+	//[SIElementEditorView];
 }
 
 - (BOOL)selected
@@ -73,10 +79,13 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 	_value = aValue;
 
 	// wyslij powiadomienie że zostało zmieniona wartość elementu
+	// FIXME: chwilowo wyłączone, testowanie SIElementEditorView
+/*
 	[[CPNotificationCenter defaultCenter] 
 			postNotificationName:SIElementDidChangeValueNotification
 						  object:self
-						userInfo: dict];
+					userInfo: dict];
+*/
 }
 
 - (void)value
@@ -93,11 +102,26 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 }
 
 /*
+	Powtórzenie metody w ramch kompatybilnosci (którą wprowdzę)
+*/
+- (CGRect)bounds
+{
+	return [self rect];
+}
+
+- (void)draw
+{
+	if (_elementsView)
+		[self willDrawInView:_elementsView];
+}
+
+/*
 	Metoda odpowiada za rysowanie elementu 
 	w widoku dokumentu {@see SIElementsView}
 */
 - (void)willDrawInView:(SIElementsView)anView
 {
+	//[self setElementsView:anView];
 	alert("[SIElement willDrawInView:] musi zostać zaimplementowana");
 }
 

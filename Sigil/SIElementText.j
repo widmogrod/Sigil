@@ -19,6 +19,8 @@
 
 - (void)willDrawInView:(SIElementsView)anView
 {
+	//[super willDrawInView:anView];
+
 	[_textField setFrame: [self rect]];
 	
 	/*
@@ -32,6 +34,11 @@
     [_textField sizeToFit];
     
 	[anView addSubview:_textField];
+	/*
+	[[_anView superview] addSubview:self
+							   positioned:CPWindowBelow
+							   relativeTo:_elementsView];
+	*/
 }
 
 - (CPArray)elementOptions

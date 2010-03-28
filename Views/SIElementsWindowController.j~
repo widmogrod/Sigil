@@ -16,8 +16,10 @@
 	self = [super initWithWindow:theWindow];
 	if (self)
 	{
+		// bardzo się naszukałem tego cudeńka ;)
+		// akceptowane są ruchy myszy (wydajność!)
+		[theWindow setAcceptsMouseMovedEvents:YES];
 		
-
 		// Pobierz wymiary okna przeglądarki
 		var platformBounds = [[theWindow platformWindow] nativeContentRect];
 
@@ -43,11 +45,12 @@
 
 		// elementy potrzebne tylko by wyróżnić...
 		[contentView setBackgroundColor:[CPColor greenColor]];
-		[contentArea setBackgroundColor:[CPColor redColor]];
+		//[contentArea setBackgroundColor:[CPColor redColor]];
 		
 		// dodaj element remnderujący elementy do widoku
 		[contentView addSubview:contentArea];
 		
+		// teraz zwraca NO .. ale na chwilę obecną nie jest potrzebne
 		//[theWindow makeFirstResponder:contentArea];
 	}
 	
@@ -68,6 +71,9 @@
 	return elements;
 }
 
+/*
+	Zwracanie zestawu elementów, które są zaznaczone
+*/
 - (CPSet)selectedElements
 {
 	var selectedElements = [[self document] selectedElements];

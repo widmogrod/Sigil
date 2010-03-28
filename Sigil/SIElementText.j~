@@ -19,6 +19,8 @@
 
 - (void)willDrawInView:(SIElementsView)anView
 {
+	//[super willDrawInView:anView];
+
 	[_textField setFrame: [self rect]];
 	
 	/*
@@ -26,12 +28,17 @@
 			  - Być może tak i do tego funkcjonalność rysowania powinna również
 			    zostać zaimplementowana w {@see SIElement};
 	*/
-	[_textField setObjectValue:value]; 
+	[_textField setObjectValue:_value]; 
 	[_textField setBezeled:YES]; 
     [_textField setEditable:NO]; 
     [_textField sizeToFit];
     
-	[anView addSubview:_textField];
+	[[anView superview] addSubview:_textField];
+	/*
+	[[_anView superview] addSubview:self
+							   positioned:CPWindowBelow
+							   relativeTo:_elementsView];
+	*/
 }
 
 - (CPArray)elementOptions
