@@ -18,7 +18,7 @@
 	{
 		// bardzo się naszukałem tego cudeńka ;)
 		// akceptowane są ruchy myszy (wydajność!)
-		[theWindow setAcceptsMouseMovedEvents:YES];
+		[theWindow setAcceptsMouseMovedEvents:NO];
 		
 		// Pobierz wymiary okna przeglądarki
 		var platformBounds = [[theWindow platformWindow] nativeContentRect];

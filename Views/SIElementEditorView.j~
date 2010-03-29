@@ -5,6 +5,8 @@
 
 SIElementEditorViewShared = nil;
 
+var SIElementEditorViewHandleTopLeft = 0;
+
 /*
 	Edytor woidoku elementu odpowiada za:
 	- rysowanie uchwytów zmieniających rozmiar elementu
@@ -24,11 +26,17 @@ SIElementEditorViewShared = nil;
 	
 	(unsigned int)		_layerPaddingElementSize;
 	(unsigned int)		_handleSize;
+	(unsigned int)		_handleType;
 
 	CGRect 				_handleTopLeft;
 	CGRect 				_handleTopRight;
 	CGRect 				_handleBottomLeft;
 	CGRect 				_handleBottomRight;
+	
+	
+	
+	CGPoint     dragLocation;
+    CGPoint     editedOrigin;
 }
 
 /*
@@ -81,31 +89,27 @@ SIElementEditorViewShared = nil;
     return self;
 }
 
-- (void)mouseUp:(CPEvent)anEvent
+- (void)mouseDown:(CPEvent)anEvent
 {
-}
-
-- (void)mouseDragged:(CPEvent)anEvent
-{
-	/* location CGPoint */
+    editedOrigin = [self frame].origin;
+    
+    dragLocation = [anEvent locationInWindow];
+    
+    /* location CGPoint */
 	var location = [anEvent locationInWindow];
 
 	// konwertuje położenie myszki dla tego widoku względem głównego okna
 	var point = [self convertPoint:location 
 						  fromView:[[_elementsView window] contentView]];
-console.log(point.x, point.y);
+
 	// alternatywny sposób wykonania tego samego.. z tym że teraz jest implicite
 	// o jakim oknie mowa..
 	// [self convertPoint:location fromView:nil];
-	
-	
-	// kliknieto górny lewy róg
+    
+    // kliknieto górny lewy róg
 	if (CGRectContainsPoint(_handleTopLeft, point))
 	{
-		_handleTopLeft.origin.x += point.x;
-		_handleTopLeft.origin.y += point.y;
-		//[self setFrameOrigin:location];
-		//console.log(_handleTopLeft.origin, [self frameOrigin], [self convertPoint:location fromView:[[_elementsView window] contentView]]);
+		_handleType = SIElementEditorViewHandleTopLeft;
 		
 		console.log("kliknieto górny lewy róg", _handleTopLeft.origin.x);
 		//[_elementsView setNeedsDisplay:YES];
@@ -135,14 +139,38 @@ console.log(point.x, point.y);
 		[self setFrameOrigin:location];		
 		*/
 	}
-/*
-	[CPApp setTarget:self 
-		    	selector:@selector(resizeElement:) 
-forNextEventMatchingMask:CPLeftMouseDraggedMask | CPLeftMouseUpMask 
-			   untilDate:nil 
-			   	  inMode:nil 
-			   	 dequeue:YES];
-*/
+}
+
+- (void)mouseUp:(CPEvent)anEvent
+{
+}
+
+- (void)mouseDragged:(CPEvent)anEvent
+{
+	/* location CGPoint */
+	var location = [anEvent locationInWindow];
+
+	// konwertuje położenie myszki dla tego widoku względem głównego okna
+	var point = [self convertPoint:location 
+						  fromView:[[_elementsView window] contentView]];
+	
+	
+	switch (_handleType)
+	{
+		case SIElementEditorViewHandleTopLeft:
+			var origin = editedOrigin;
+			[self setFrameOrigin:CGPointMake(origin.x + location.x - dragLocation.x, origin.y + location.y - dragLocation.y)];
+			break;
+			
+	}
+	/*
+		[CPApp setTarget:self 
+					selector:@selector(resizeElement:) 
+	forNextEventMatchingMask:CPLeftMouseDraggedMask | CPLeftMouseUpMask 
+				   untilDate:nil 
+				   	  inMode:nil 
+				   	 dequeue:YES];
+	*/
 }
 
 - (void)resizeElement:(CPEvent)anEvent
