@@ -156,7 +156,7 @@ var SIElementEditorViewHandleBody = 0,
 
 	var origin = _editedFrame.origin,
 		size   = _editedFrame.size;
-
+		
 	switch (_handleType)
 	{
 		case SIElementEditorViewHandleTopLeft:
@@ -175,7 +175,7 @@ var SIElementEditorViewHandleBody = 0,
 			var rect = CGRectMake(origin.x,
 								  origin.y + dragY,
 								  size.width + dragX,
-								  size.height + dragY);
+								  size.height - dragY);
 
 
 			[self setFrame:rect];
@@ -199,7 +199,6 @@ var SIElementEditorViewHandleBody = 0,
 								  size.width + dragX,
 								  size.height + dragY);
 
-
 			[self setFrame:rect];
 			break;
 
@@ -210,6 +209,15 @@ var SIElementEditorViewHandleBody = 0,
 			break;
 			
 	}
+	
+	var currentSize = [self frameSize];
+
+	// określ propocję zmian i zamień liczbę na naturalną
+	var proportions = CGSizeMake([currentSize.width/size.width unsignedIntValue], 
+								 [currentSize.height/size.height unsignedIntValue]);
+
+	[_element setScaleProportions:proportions];
+
 	/*
 		[CPApp setTarget:self 
 					selector:@selector(resizeElement:) 

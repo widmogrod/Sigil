@@ -25,12 +25,12 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 	CPString 			_value;
 	
 	// wysokość i szerokość
-	(unsigned int) 		width @accessors;
-	(unsigned int) 		height @accessors;
+	(unsigned int) 		_width @accessors(property=width);
+	(unsigned int) 		_height @accessors(property=height);
 
 	// położenie (x,y)
-	(unsigned int) 		positionX @accessors;
-	(unsigned int) 		positionY @accessors;
+	(unsigned int) 		_positionX @accessors(property=positionX);
+	(unsigned int) 		_positionY @accessors(property=positionY);
 	
 	(BOOL) 				_selected;
 	
@@ -98,7 +98,7 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 */
 - (CGRect)rect
 {
-	return CGRectMake(positionX, positionY, width, height);
+	return CGRectMake(_positionX, _positionY, _width, _height);
 }
 
 /*
@@ -114,6 +114,9 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 	if (_elementsView)
 		[self willDrawInView:_elementsView];
 }
+
+-(void)setScaleProportions:(CGSize)aSize
+{}
 
 /*
 	Metoda odpowiada za rysowanie elementu 

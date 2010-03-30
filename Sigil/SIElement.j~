@@ -25,8 +25,8 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 	CPString 			_value;
 	
 	// wysokość i szerokość
-	(unsigned int) 		width @accessors;
-	(unsigned int) 		height @accessors;
+	(unsigned int) 		_width @accessors(property=width);
+	(unsigned int) 		_height @accessors(property=height);
 
 	// położenie (x,y)
 	(unsigned int) 		positionX @accessors;
@@ -108,6 +108,15 @@ SIElementDidChangeValueNotification = @"SIElementDidChangeValueNotification";
 {
 	return [self rect];
 }
+
+- (void)draw
+{
+	if (_elementsView)
+		[self willDrawInView:_elementsView];
+}
+
+-(void)setScaleProportions:(CGSize)aSize
+{}
 
 /*
 	Metoda odpowiada za rysowanie elementu 
