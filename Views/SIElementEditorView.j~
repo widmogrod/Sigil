@@ -5,6 +5,7 @@
 
 SIElementEditorViewShared = nil;
 
+// Rodzaje uchwytów
 var SIElementEditorViewHandleTopLeft = 0;
 
 /*
@@ -33,10 +34,8 @@ var SIElementEditorViewHandleTopLeft = 0;
 	CGRect 				_handleBottomLeft;
 	CGRect 				_handleBottomRight;
 	
-	
-	
-	CGPoint     dragLocation;
-    CGPoint     editedOrigin;
+	CGPoint     		_dragLocation;
+    CGPoint     		_editedOrigin;
 }
 
 /*
@@ -91,9 +90,9 @@ var SIElementEditorViewHandleTopLeft = 0;
 
 - (void)mouseDown:(CPEvent)anEvent
 {
-    editedOrigin = [self frame].origin;
-    
-    dragLocation = [anEvent locationInWindow];
+	
+    _editedOrigin = [self frameOrigin];
+    _dragLocation = [anEvent locationInWindow];
     
     /* location CGPoint */
 	var location = [anEvent locationInWindow];
@@ -147,19 +146,15 @@ var SIElementEditorViewHandleTopLeft = 0;
 
 - (void)mouseDragged:(CPEvent)anEvent
 {
-	/* location CGPoint */
+	/* @var location CGPoint */
 	var location = [anEvent locationInWindow];
 
-	// konwertuje położenie myszki dla tego widoku względem głównego okna
-	var point = [self convertPoint:location 
-						  fromView:[[_elementsView window] contentView]];
-	
-	
 	switch (_handleType)
 	{
 		case SIElementEditorViewHandleTopLeft:
-			var origin = editedOrigin;
-			[self setFrameOrigin:CGPointMake(origin.x + location.x - dragLocation.x, origin.y + location.y - dragLocation.y)];
+			[self setFrameOrigin:CGPointMake(_editedOrigin.x + location.x - _dragLocation.x,
+											 _editedOrigin.y + location.y - _dragLocation.y)];
+			
 			break;
 			
 	}
