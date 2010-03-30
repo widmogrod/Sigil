@@ -5,8 +5,12 @@
 
 SIElementEditorViewShared = nil;
 
-// Rodzaje uchwytów
-var SIElementEditorViewHandleTopLeft = 0;
+// Rodzaje uchwytów 
+var SIElementEditorViewHandleBody = 0,
+	SIElementEditorViewHandleTopLeft = 1,
+	SIElementEditorViewHandleTopRight = 2,
+	SIElementEditorViewHandleBottomLeft = 3,
+	SIElementEditorViewHandleBottomRight = 4;
 
 /*
 	Edytor woidoku elementu odpowiada za:
@@ -35,7 +39,7 @@ var SIElementEditorViewHandleTopLeft = 0;
 	CGRect 				_handleBottomRight;
 	
 	CGPoint     		_dragLocation;
-    CGPoint     		_editedOrigin;
+    CGPoint     		_editedFrame;
 }
 
 /*
@@ -91,9 +95,9 @@ var SIElementEditorViewHandleTopLeft = 0;
 - (void)mouseDown:(CPEvent)anEvent
 {
 	
-    _editedOrigin = [self frameOrigin];
+    _editedFrame = [self frame];
     _dragLocation = [anEvent locationInWindow];
-    
+
     /* location CGPoint */
 	var location = [anEvent locationInWindow];
 
@@ -109,34 +113,25 @@ var SIElementEditorViewHandleTopLeft = 0;
 	if (CGRectContainsPoint(_handleTopLeft, point))
 	{
 		_handleType = SIElementEditorViewHandleTopLeft;
-		
-		console.log("kliknieto górny lewy róg", _handleTopLeft.origin.x);
-		//[_elementsView setNeedsDisplay:YES];
 	} else
 	// kliknieto górny prawy róg
 	if (CGRectContainsPoint(_handleTopRight, point))
 	{
-		console.log("kliknieto górny prawy róg");
+		_handleType = SIElementEditorViewHandleTopRight;
 	} else
 	// kliknieto dolny lewy róg
 	if (CGRectContainsPoint(_handleBottomLeft, point))
 	{
-		console.log("kliknieto dolny lewy róg");
+		_handleType = SIElementEditorViewHandleBottomLeft;
 	} else
 	// kliknieto dolny prawy róg
 	if (CGRectContainsPoint(_handleBottomRight, point))
 	{
-		console.log("kliknieto dolny prawy róg");
+		_handleType = SIElementEditorViewHandleBottomRight;
 	} else
 	// przesuń element
 	{
-		/*
-		[_element setPositionX:location.x];
-		[_element setPositionY:location.y];
-		[_elementsView setNeedsDisplay:YES];
-
-		[self setFrameOrigin:location];		
-		*/
+		_handleType = SIElementEditorViewHandleBody;
 	}
 }
 
@@ -148,20 +143,70 @@ var SIElementEditorViewHandleTopLeft = 0;
 {
 	/* @var location CGPoint */
 	var location = [anEvent locationInWindow];
+	
+	/*
+		Oblicz odległość przesunięcia myszki,
+			location.x - _dragLocation.x
+			
+		i dodaj tą wartość do pozycji elementu.
+		Otrzymasz nowe położenie elementu ;]
+	*/
+	var dragX = location.x - _dragLocation.x,
+		dragY = location.y - _dragLocation.y;
+
+	var origin = _editedFrame.origin,
+		size   = _editedFrame.size;
 
 	switch (_handleType)
 	{
 		case SIElementEditorViewHandleTopLeft:
-			/*
-				Oblicz odległość przesunięcia myszki,
-					location.x - _dragLocation.x
-					
-				i dodaj tą wartość do pozycji elementu.
-				Otrzymasz nowe położenie elementu ;]
-			*/
-			[self setFrameOrigin:CGPointMake(_editedOrigin.x + location.x - _dragLocation.x,
-											 _editedOrigin.y + location.y - _dragLocation.y)];
+			// oblicz przesuniecie rogu ramki
+			var rect = CGRectMake(origin.x + dragX,
+								  origin.y + dragY,
+								  size.width - dragX,
+								  size.height - dragY);
+
+
+			[self setFrame:rect];
+			break;
 			
+		case SIElementEditorViewHandleTopRight:
+			// oblicz przesuniecie rogu ramki
+			var rect = CGRectMake(origin.x,
+								  origin.y + dragY,
+								  size.width + dragX,
+								  size.height - dragY);
+
+
+			[self setFrame:rect];
+			break;
+			
+		case SIElementEditorViewHandleBottomLeft:
+			// oblicz przesuniecie rogu ramki
+			var rect = CGRectMake(origin.x + dragX,
+								  origin.y,
+								  size.width - dragX,
+								  size.height + dragY);
+
+
+			[self setFrame:rect];
+			break;
+			
+		case SIElementEditorViewHandleBottomRight:
+			// oblicz przesuniecie rogu ramki
+			var rect = CGRectMake(origin.x,
+								  origin.y,
+								  size.width + dragX,
+								  size.height + dragY);
+
+
+			[self setFrame:rect];
+			break;
+
+		case SIElementEditorViewHandleBody:
+		default:
+			[self setFrameOrigin:CGPointMake(origin.x + dragX,
+											 origin.y + dragY)];
 			break;
 			
 	}
