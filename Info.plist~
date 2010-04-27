@@ -28,7 +28,7 @@
 	<array>
 		<dict>
 			<key>CPBundleTypeName</key>
-			<string>SigilBungle</string>
+			<string>SigilBundle</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>sig</string>

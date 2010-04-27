@@ -54,6 +54,20 @@ var SIElementEditorViewHandleBody = 0,
 	return SIElementEditorViewShared;
 }
 
+/*
+- (BOOL) acceptsFirstResponder
+{
+	return YES;
+}
+*/
+
+/*
+- (BOOL) becomeFirstResponder
+{
+	return YES;
+}
+*/
+
 - (id)initWithFrame:(CGRect)aFrame
 {
     self = [super initWithFrame:aFrame];
@@ -488,6 +502,7 @@ var SIElementEditorViewHandleBody = 0,
 							CGRectGetWidth(bounds)+10,
 							CGRectGetHeight(bounds)+10);
 	
+	// rysowanie obramowania
 	CGContextStrokeRect(context, bounds);
 
 	/*				

@@ -18,7 +18,7 @@
 	{
 		// bardzo się naszukałem tego cudeńka ;)
 		// akceptowane są ruchy myszy (wydajność!)
-		[theWindow setAcceptsMouseMovedEvents:NO];
+		[theWindow setAcceptsMouseMovedEvents:YES];
 		
 		// Pobierz wymiary okna przeglądarki
 		var platformBounds = [[theWindow platformWindow] nativeContentRect];
@@ -51,7 +51,7 @@
 		[contentView addSubview:contentArea];
 		
 		// teraz zwraca NO .. ale na chwilę obecną nie jest potrzebne
-		//[theWindow makeFirstResponder:contentArea];
+		console.log([theWindow makeFirstResponder:contentArea]);
 	}
 	
 	return self;

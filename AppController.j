@@ -1,3 +1,11 @@
+/*
+ * AppController.j
+ * Sigil
+ *
+ * Created by You on April 26, 2010.
+ * Copyright 2010, Your Company All rights reserved.
+ */
+
 @import <Foundation/CPObject.j>
 
 @import "SIMenu.j"

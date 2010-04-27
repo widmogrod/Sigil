@@ -7,6 +7,8 @@
 
 @import "../Sigil/SIElementManager.j";
 
+@import "SIElement2.j";
+
 
 @implementation SIOptionsView : CPView
 {
@@ -17,6 +19,10 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
+		var el2 = [[SIElement2 alloc] initWithFrame: CGRectMake(CGRectGetMinX(aFrame),
+																CGRectGetMinY(aFrame), 120, 120)];
+		[self addSubview: el2];
+		
 		/*
 			Ustaw widok jako obserwator zmiany zaznaczenia
 			pojedyńczego elementu

@@ -51,7 +51,7 @@
 		[contentView addSubview:contentArea];
 		
 		// teraz zwraca NO .. ale na chwilę obecną nie jest potrzebne
-		//[theWindow makeFirstResponder:contentArea];
+		//console.log([theWindow makeFirstResponder:contentArea]);
 	}
 	
 	return self;

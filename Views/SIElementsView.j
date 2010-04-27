@@ -16,6 +16,10 @@
 	self = [super initWithFrame:aFrame];
 	if (self)
 	{
+	
+		// zarejestruj typy które będzie przechwytywac widok
+		[self registerForDraggedTypes:["SIElement2"]]; 
+		
 		/*
 			Ustaw widok jako obserwator zmiany wartości elementu
 			TODO: Zastanowic się cz nie zrobić pętli dla każdego elemtnu
@@ -33,6 +37,57 @@
 	}
 
 	return self;
+}
+
+/*
+	Poniższe trzymetody są wywoływane w kolejności numerków...
+	z tym że metoda
+	
+	- 1. albo YES albo nie zaimplementowana
+	- 2. albo YES albo nie zaimplementowana
+	- 3. zawsze (gdy powyższe spełniają w/w warunki)
+*/
+
+/*
+// 1. przygotowanie operacji przenoszenia
+- (void)prepareForDragOperation:(CPDraggingInfo)aSender 
+{
+	console.log("prepareForDragOperation");
+	return true;
+}
+*/
+
+
+// 2. Wykonuje operacje przenoszenia
+- (void)performDragOperation:(CPDraggingInfo)aSender 
+{ 
+	// "lingua franca"  - transakcja danych w spólnym w Cappuccino CPData
+	var data = [[aSender draggingPasteboard] dataForType:"SIElement2"]; 
+	
+	// widokgrafiki z pozycja przenoszenia
+	var vi = [[CPImageView alloc] initWithFrame:CGRectMake([aSender draggingLocation].x,[aSender draggingLocation].y, 50, 50)];
+	
+	[vi setImage:[CPKeyedUnarchiver unarchiveObjectWithData:data]];
+	
+	[self addSubview: vi];
+} 
+
+/*
+// 3. Dokończenie operacji przenoszzenia
+- (void)concludeDragOperation:(CPDraggingInfo)aSender 
+{
+	console.log("concludeDragOperation");
+}
+*/
+
+- (void)draggingEntered:(CPDraggingInfo)aSender 
+{ 
+	console.log("draggingEntered");	
+}
+
+- (void)draggingExited:(CPDraggingInfo)aSender 
+{ 
+	console.log("draggingExited");
 }
 
 /*
@@ -154,7 +209,7 @@
 
 			if ([anEvent clickCount] > 1)
 			{
-				//[sharedElementEditorView displayEditable];
+				[sharedElementEditorView displayEditable];
 			} else
 			if ([anEvent clickCount] == 1)
 			{
@@ -188,12 +243,12 @@
     Notifies the receiver that the user has released the left mouse button.
     @param anEvent contains information about the release
 */
-/*
 - (void)mouseUp:(CPEvent)anEvent
 {
+	console.log("UP");
 	[super mouseUp:anEvent];
 }
-*/
+
 
 /*!
     Notifies the receiver that the user has moved the mouse (with no buttons down).
